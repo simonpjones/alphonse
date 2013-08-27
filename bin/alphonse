@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+
+$:.push File.expand_path("../../lib", __FILE__)
+
+require 'alphonse'
+require 'alphonse/cli'
+
+Alphonse::Cli.start
