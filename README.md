@@ -4,7 +4,7 @@ Deploy like the fonz with this simple deployment gem.
 
 ## Installation
 
-1. Either `gem install alphonse` or add it to your Gemfile `gem "alphonse", "~> 0.0.4"`.
+1. Either `gem install alphonse` or add it to your Gemfile `gem "alphonse", "~> 0.0.5"`.
 2. Navigate to the directory in which you wish to use alphonse.
 3. Run `alphonse init` - this will generate the default Fonzfile.
 4. Edit the Fonzfile to suit your app and deployment operations required.
