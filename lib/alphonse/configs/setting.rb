@@ -31,8 +31,8 @@ module Alphonse
         set_attr :env_path => value
       end
 
-      def ruby_path(value)
-        set_attr :ruby_path => value
+      def ruby_bin_path(value)
+        set_attr :ruby_bin_path => value
       end
 
       def start_command(value)
