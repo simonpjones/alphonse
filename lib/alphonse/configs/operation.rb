@@ -53,9 +53,13 @@ module Alphonse
       alias :setup_directory :mkdir_path
 
       def cd_to_path
-        "cd #{config[:path]}"
+        "#{cd_to_parent_path}#{config[:app_name]}"
       end
       alias :cd :cd_to_path
+
+      def cd_to_parent_path
+        "cd #{config[:path]}"
+      end
 
       def git_pull
         ["git checkout #{branch} -q", "git pull origin #{branch} -q", "git gc --aggressive"]

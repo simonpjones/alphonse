@@ -1,5 +1,6 @@
 # Settings
 user 'remote_user'
+app_name 'app_name'
 hosts 'stage.example.com'
 path "/fullpath/to/folder"
 git_repo 'git@gitaddress:repository.git'

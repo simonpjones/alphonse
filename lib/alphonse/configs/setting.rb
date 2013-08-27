@@ -11,12 +11,16 @@ module Alphonse
         set_attr :user => value
       end
 
+      def app_name(value)
+        set_attr :app_name => value
+      end
+
       def hosts(*value)
         set_attr :hosts => [*value].flatten
       end
 
       def path(value)
-        set_attr :path => value
+        set_attr :path => (value[-1] == '/' ? value : "#{value}/")
       end
 
       def git_repo(value)

@@ -34,7 +34,7 @@ module Alphonse
     # Create and setup folder on remote server
     def setup
       Alphonse.logger.operation config[:setup_description]
-      prerequisite.push config[:setup].map { |task| send task }
+      setup_prerequisite.push config[:setup].map { |task| send task }
     end
 
     # First time deploy of app to remote server
@@ -59,6 +59,10 @@ module Alphonse
     def restart
       Alphonse.logger.operation config[:restart_description]
       prerequisite.push config[:restart].map { |task| send(task) }
+    end
+
+    def setup_prerequisite
+      [cd_to_parent_path]
     end
 
     def prerequisite
