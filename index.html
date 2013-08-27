@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Alphonse by simonjones</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Alphonse</h1>
+          <h2>Simple rails deployment gem</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/simonjones/alphonse/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/simonjones/alphonse/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/simonjones/alphonse" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="alphonse" class="anchor" href="#alphonse"><span class="octicon octicon-link"></span></a>Alphonse</h1>
+
+<p>Deploy like the fonz with this simple deployment gem.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ol>
+<li>Either <code>gem install alphonse</code> or add it to your Gemfile <code>gem "alphonse", "~&gt; 0.0.5"</code>.</li>
+<li>Navigate to the directory in which you wish to use alphonse.</li>
+<li>Run <code>alphonse init</code> - this will generate the default Fonzfile.</li>
+<li>Edit the Fonzfile to suit your app and deployment operations required.</li>
+</ol><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Once you have finished optmising the Fonzfile with the specific operations configurations, run the operations using <code>alphonse [OPERATION] [OPTIONS]</code>:</p>
+
+<p><code>alphonse setup</code>
+<code>alphonse deploy -e staging</code> (the environment will be used when running rake tasks)
+<code>alphonse update --verbose</code> (verbose will return the output of each command irrelevant of success or failure)</p>
+
+<h3>
+<a name="task" class="anchor" href="#task"><span class="octicon octicon-link"></span></a>Task</h3>
+
+<p>A Task is a set of simple commands that are to be run in sequence. For example, the preset :clone_repository action consists of the following commands used to clone a git repository:</p>
+
+<p><code>"git checkout master -q", "git pull origin master -q", "git gc --aggressive"</code></p>
+
+<h3>
+<a name="operation" class="anchor" href="#operation"><span class="octicon octicon-link"></span></a>Operation</h3>
+
+<p>An Operation is in turn a collection of Tasks which are run in sequence. For example, the present :deploy operation consists of the following Tasks which could be considered necessary for a Rails app deployment</p>
+
+<div class="highlight"><pre>  <span class="ss">:install_gems</span><span class="p">,</span> <span class="ss">:setup_database</span><span class="p">,</span> <span class="ss">:restart_app</span>
+</pre></div>
+
+<h3>
+<a name="example-fonzfile" class="anchor" href="#example-fonzfile"><span class="octicon octicon-link"></span></a>Example Fonzfile</h3>
+
+<div class="highlight"><pre>  <span class="c1"># Settings</span>
+  <span class="n">user</span> <span class="s1">'remote_user'</span>
+  <span class="n">app_name</span> <span class="s1">'application_name'</span>
+  <span class="n">hosts</span> <span class="s1">'stage.example.com'</span>
+  <span class="n">path</span> <span class="s2">"/fullpath/to/folder"</span>
+  <span class="n">git_repo</span> <span class="s1">'git@gitaddress:application_name.git'</span>
+  <span class="n">branch</span> <span class="s1">'master'</span>
+  <span class="n">ruby_bin_path</span> <span class="s1">'/path/to/ruby/'</span>
+  <span class="n">start_command</span> <span class="s1">'start_app command'</span> 
+  <span class="n">restart_command</span> <span class="s1">'restart_app command'</span> <span class="c1"># E.g. 'touch tmp/restart.txt'</span>
+
+  <span class="n">operation</span> <span class="ss">:setup</span><span class="p">,</span> <span class="s1">'Setup server'</span> <span class="k">do</span>
+    <span class="n">tasks</span> <span class="ss">:setup_directory</span>
+  <span class="k">end</span>
+
+  <span class="n">operation</span> <span class="ss">:deploy</span><span class="p">,</span> <span class="s1">'Deploy repository'</span> <span class="k">do</span>
+    <span class="n">tasks</span> <span class="ss">:clone_repository</span><span class="p">,</span> <span class="ss">:install_gems</span><span class="p">,</span> <span class="ss">:setup_database</span><span class="p">,</span> <span class="ss">:start_app</span>
+  <span class="k">end</span>
+
+  <span class="n">operation</span> <span class="ss">:update</span><span class="p">,</span> <span class="s1">'Update the repository on the server'</span> <span class="k">do</span>
+    <span class="n">tasks</span> <span class="ss">:update_repository</span><span class="p">,</span> <span class="ss">:install_gems</span><span class="p">,</span> <span class="ss">:update_database</span><span class="p">,</span> <span class="ss">:restart_app</span>
+  <span class="k">end</span>
+
+  <span class="n">operation</span> <span class="ss">:restart</span><span class="p">,</span> <span class="s1">'Restart application'</span> <span class="k">do</span>
+    <span class="n">tasks</span> <span class="ss">:restart_app</span>
+  <span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="note" class="anchor" href="#note"><span class="octicon octicon-link"></span></a>Note</h2>
+
+<p>Chances are you will experience issues with PATH variables and rubygems etc. So here's a quick solution:</p>
+
+<p>Log in to your server, as a root user, add the following line to /etc/ssh/sshd_config:</p>
+
+<pre><code>PermitUserEnvironment yes
+</code></pre>
+
+<p>Don’t forget to restart ssh:</p>
+
+<pre><code>/etc/init.d/ssh restart
+</code></pre>
+
+<p>Now, log in as the deployment user, and create ‘~/.ssh/environment’ with the following content:</p>
+
+<pre><code>PATH=/usr/local/rvm/gems/ruby-2.0.0-p247/bin:/bin:/usr/local/rvm/rubies/ruby-2.0.0-p247/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+GEM_HOME=/usr/local/rvm/gems/ruby-2.0.0-p247
+</code></pre>
+
+<p><em>The above paths are for your reference only, obviously you need to work them out for your server environment. The only thing you need to make sure is that the GEM_HOME's path matches one from the PATH.</em></p>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol><p><img src="http://lovablelabelsblog.com/wp-content/uploads/2010/03/fonz1.jpg" alt="May the Fonz be with you"></p>
+        </section>
+
+        <footer>
+          Alphonse is maintained by <a href="https://github.com/simonjones">simonjones</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
