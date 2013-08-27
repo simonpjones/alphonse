@@ -27,7 +27,9 @@ A Task is a set of simple commands that are to be run in sequence. For example, 
 
 An Operation is in turn a collection of Tasks which are run in sequence. For example, the present :deploy operation consists of the following Tasks which could be considered necessary for a Rails app deployment
 
-  ```ruby :install_gems, :setup_database, :restart_app```
+  ```ruby
+  :install_gems, :setup_database, :restart_app
+  ```
 
 ### Example Fonzfile
 
