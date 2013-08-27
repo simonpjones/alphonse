@@ -68,7 +68,7 @@ module Alphonse
       alias :update_repository :git_pull
 
       def git_clone
-        "git clone #{repository} #{config[:path]}"
+        "git clone #{repository} #{config[:path]}#{config[:app_name]}"
       end
       alias :gc :git_clone
       alias :clone_repository :git_clone
