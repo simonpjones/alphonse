@@ -2,7 +2,7 @@ module Alphonse
   module Configs
     module Setting
 
-      # TODO: evaluate attributes so allow attribute reuse
+      # TODO: evaluate attributes to allow attribute reuse
       # E.g.
       #   user = "user_name"
       #   path = "/full/path/to/#{user}" => "/full/path/to/user_name"

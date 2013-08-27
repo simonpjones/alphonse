@@ -62,7 +62,7 @@ module Alphonse
     end
 
     def prerequisite
-      [cd_to_path, 'ls -al', 'which ruby']
+      [cd_to_path]
     end
 
     def hosts
