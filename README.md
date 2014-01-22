@@ -1,4 +1,4 @@
-# Alphonse
+# Alphonse [![Build Status](https://secure.travis-ci.org/simonjones/alphonse.png?branch=master)](http://travis-ci.org/simonjones/alphonse)
 
 Deploy like the fonz with this simple deployment gem.
 
